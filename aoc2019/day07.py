@@ -6,12 +6,6 @@ from queue import Queue
 import threading
 
 
-def listin(data):
-    inp = Queue()
-    [inp.put(v) for v in data]
-    return qin(inp)
-
-
 def qin(q):
     return lambda: q.get(True, 2)
 

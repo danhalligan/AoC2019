@@ -8,7 +8,7 @@ def parse_opcode(code):
     return op, modes
 
 
-def intcode(program):
+def intcode(program, input):
     def getv(mode, v):
         return program[v] if mode == 0 else v
 
@@ -28,12 +28,11 @@ def intcode(program):
             ptr += 4
         elif opcode == 3:
             a = program[ptr + 1]
-            print("Enter input: ", end="")
-            program[a] = int(input())
+            program[a] = input
             ptr += 2
         elif opcode == 4:
             o = program[ptr + 1]
-            print(getv(modes[0], o))
+            yield getv(modes[0], o)
             ptr += 2
         elif opcode == 5:
             a, b = program[ptr + 1 : ptr + 3]
@@ -61,5 +60,11 @@ def intcode(program):
             raise Exception("Error!")
 
 
-x = input_ints("inputs/day05.txt")
-intcode(x)
+def part1(file):
+    prog = input_ints(file)
+    return list(intcode(prog, 1))[-1]
+
+
+def part2(file):
+    prog = input_ints(file)
+    return list(intcode(prog, 5))[0]
