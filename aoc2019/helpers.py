@@ -19,7 +19,7 @@ def input_str(file):
 
 def input_lines(file):
     """Returns lines from input file"""
-    return input_str(file).splitlines()
+    return open(file).read().splitlines()
 
 
 def input_ints(file):

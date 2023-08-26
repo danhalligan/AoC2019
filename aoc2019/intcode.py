@@ -31,16 +31,27 @@ def basic_intcode(prog, input):
 class Intcode:
     _ids = count(0)
 
-    def __init__(self, program, inputter=readint, outputter=print):
+    def __init__(self, program, inputter=None, outputter=None, ascii_mode=False):
         self.program = defaultdict(int)
         for v, x in enumerate(program):
             self.program[v] = x
         self.ptr = 0
-        self.inputter = inputter
-        self.outputter = outputter
         self.id = next(self._ids)
         self.relative_base = 0
         self.halted = False
+        self.ascii_mode = ascii_mode
+        if outputter is None:
+            if ascii_mode:
+                outputter = lambda x: print(x, end="")
+            else:
+                outputter = print
+        self.outputter = outputter
+        if inputter is None:
+            if ascii_mode:
+                inputter = input
+            else:
+                inputter = readint
+        self.inputter = inputter
 
     def parse_opcode(self, code):
         x = list(str(code).rjust(5, "0"))
@@ -111,6 +122,8 @@ class Intcode:
     def op3(self, modes):
         a = self.params(1)[0]
         val = self.inputter()
+        if self.ascii_mode:
+            val = ord(val)
         if self.kill_signal is not None and val == self.kill_signal:
             self.halted = True
             return
@@ -122,6 +135,8 @@ class Intcode:
         val = self.params(1)[0]
         out = self.getv(modes[0], val)
         # print(f"[{self.id}] writing {self.getv(modes[0], val)}")
+        if self.ascii_mode:
+            out = chr(out)
         self.outputter(out)
         self.ptr += 2
         return out

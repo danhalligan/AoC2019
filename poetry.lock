@@ -346,6 +346,17 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)"]
 use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
+name = "termcolor"
+version = "2.3.0"
+description = "ANSI color formatting for output in terminal"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+tests = ["pytest", "pytest-cov"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -421,7 +432,7 @@ test = ["covdefaults (>=2.3)", "coverage-enable-subprocess (>=1)", "coverage (>=
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "625fe59081e428b5b396d85d1143ea4f13a33c6dda93a3ec0952bf3520723a8c"
+content-hash = "d6514db3cd6503c8382b89e29e8d6031520c6e03fe960fa52a5e5e0bd4e552ba"
 
 [metadata.files]
 advent-of-code-ocr = []
@@ -456,6 +467,7 @@ pytest = []
 pytest-cov = []
 pyyaml = []
 requests = []
+termcolor = []
 toml = []
 tomli = []
 typer = []

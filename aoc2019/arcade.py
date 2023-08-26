@@ -2,7 +2,6 @@ from aoc2019.intcode import *
 from collections import defaultdict
 from aoc2019.helpers import input_ints
 from queue import Queue
-import threading
 from time import sleep
 
 
@@ -74,7 +73,7 @@ class Arcade:
             4: "\u2022",  # ball
         }
         xr = span(x[0] for x in self.screen.keys())
-        yr = span(x[0] for x in self.screen.keys())
+        yr = span(x[1] for x in self.screen.keys())
         # print("\r\033[100A")
         s = ""
         for j in yr:
