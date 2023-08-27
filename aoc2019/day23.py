@@ -1,11 +1,10 @@
-import importlib
-import aoc2019.network
+from aoc2019.network import Computer, NAT
 
 
 def initialise(file):
     network = []
     for address in range(50):
-        network.append(aoc2019.network.Computer(file, address, 255, network))
+        network.append(Computer(file, address, 255, network))
     return network
 
 
@@ -20,7 +19,7 @@ def part1(file):
 
 def part2(file):
     network = initialise(file)
-    nat = aoc2019.network.NAT(network)
+    nat = NAT(network)
     lag = None
     while True:
         for comp in network:

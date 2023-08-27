@@ -49,19 +49,31 @@ class Intcode:
         return self.runpause(True, True)
 
     # Run get one input then stop
-    def runpause(self, stop_on_output=True, stop_on_input=False):
+    def runpause(self, stop_after_output=True, stop_after_input=False):
         self.paused = False
         while self.ptr < len(self.program) and not self.halted:
             opcode, modes = self.parse_opcode(self.program, self.ptr)
             Operation(opcode, modes).run(self)
             if opcode == 3:
                 self.paused = True
-                if stop_on_input:
+                if stop_after_input:
                     break
             elif opcode == 4:
-                if stop_on_output:
+                if stop_after_output:
                     break
         return self.output
+
+    # yield outputs and stop before input if no inputs
+    def rungame(self):
+        self.paused = False
+        while self.ptr < len(self.program) and not self.halted:
+            opcode, modes = self.parse_opcode(self.program, self.ptr)
+            if opcode == 3 and not self.inputs:
+                self.paused = True
+                break
+            Operation(opcode, modes).run(self)
+            if opcode == 4:
+                yield self.output
 
     def input(self, value):
         value = [value] if not isinstance(value, list) else value
