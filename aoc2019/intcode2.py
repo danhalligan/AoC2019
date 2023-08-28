@@ -2,6 +2,21 @@ from itertools import count
 from collections import defaultdict
 from aoc2019.helpers import input_ints
 from copy import copy
+from queue import Queue
+
+
+def listin(data):
+    inp = Queue()
+    [inp.put(v) for v in data]
+    return qin(inp)
+
+
+def qin(q=Queue()):
+    return lambda: q.get(True, 2)
+
+
+def qout(q=Queue()):
+    return lambda x: q.put_nowait(x)
 
 
 # takes input (file name) and returns output as a list

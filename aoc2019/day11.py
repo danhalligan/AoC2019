@@ -1,4 +1,4 @@
-from aoc2019.intcode import *
+from aoc2019.intcode2 import *
 from collections import defaultdict
 from aoc2019.helpers import input_ints
 from queue import Queue
@@ -9,8 +9,8 @@ from advent_of_code_ocr import convert_6
 def paint(prog, start_color):
     inp = Queue()
     out = Queue()
-    robot = Intcode(prog, lambda: inp.get(), qout(out))
-    thread = threading.Thread(target=robot.run)
+    robot = Intcode(prog, lambda: inp.get())
+    thread = threading.Thread(target=robot.run, args=[qout(out)])
     thread.start()
 
     d, i, j = 0, 0, 0

@@ -1,6 +1,5 @@
 from aoc2019.helpers import input_lines
-from itertools import cycle, repeat, chain
-from itertools import accumulate, chain, cycle, islice, repeat
+from itertools import accumulate
 
 
 def rep(x, n):
@@ -31,7 +30,7 @@ def part1(file):
 
 # https://www.reddit.com/r/adventofcode/comments/ebf5cy/2019_day_16_part_2_understanding_how_to_come_up
 # The pattern is 0, 1, 0, -1 which gets repeated n times (but skipping the first value)
-# When we calculate the *last* element of our 10_000 int signal, n is 10_0000 
+# When we calculate the *last* element of our 10_000 int signal, n is 10_0000
 # and the repeated pattern therefore just ends up being 0,0,0,....1.
 # Thus the last number after a "phase" will be just signal[-1] (everything else
 # is multiplied by 0 and doesn't contribute to the sum).

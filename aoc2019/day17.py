@@ -117,7 +117,7 @@ def part2(file):
     path = replace_section(path, sections[1], "B")
     path = replace_section(path, sections[2], "C")
 
-    vac = Vacuum("inputs/day17.txt")
+    vac = Vacuum(file)
     vac.input(
         main=",".join(path),
         a=",".join(str(x) for x in sections[0]),

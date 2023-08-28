@@ -6,27 +6,28 @@ def intcode(p):
     while ptr < len(p):
         opcode = p[ptr]
         if opcode == 1:
-            a, b, o = p[ptr+1:ptr+4]
+            a, b, o = p[ptr + 1 : ptr + 4]
             p[o] = p[a] + p[b]
         elif opcode == 2:
-            a, b, o = p[ptr+1:ptr+4]
+            a, b, o = p[ptr + 1 : ptr + 4]
             p[o] = p[a] * p[b]
         elif opcode == 99:
             break
         else:
-            raise Exception("Error!")
+            raise Exception(f"Opcode {opcode} not recognised")
         ptr += 4
     return p
 
 
 def part1(file):
-    x = input_ints("inputs/day02.txt")
+    x = input_ints(file)
     x[1] = 12
     x[2] = 2
     return intcode(x)[0]
 
+
 def part2(file):
-    x = input_ints("inputs/day02.txt")
+    x = input_ints(file)
     for noun in range(100):
         for verb in range(100):
             test = x.copy()

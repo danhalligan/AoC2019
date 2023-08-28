@@ -2,7 +2,7 @@ from aoc2019.helpers import input_str
 
 
 def parse(file):
-    return [int(x) for x in input_str("inputs/day04.txt").split("-")]
+    return [int(x) for x in input_str(file).split("-")]
 
 
 def valid(x):

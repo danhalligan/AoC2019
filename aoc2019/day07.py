@@ -1,22 +1,14 @@
 from aoc2019.helpers import input_ints
-from aoc2019.intcode import *
+from aoc2019.intcode2 import *
 from functools import reduce
 from itertools import permutations
 from queue import Queue
 import threading
 
 
-def qin(q):
-    return lambda: q.get(True, 2)
-
-
-def qout(q):
-    return lambda x: q.put_nowait(x)
-
-
 def amplifier(prog, input):
     out = Queue()
-    Intcode(prog, listin(input), qout(out)).run()
+    Intcode(prog, listin(input)).run(qout(out))
     return out.get_nowait()
 
 
@@ -34,10 +26,10 @@ def amplify2(prog, phases):
     for b, p in zip(qs, phases):
         b.put(p)
     qs[0].put(0)
-    amps = [Intcode(prog, qin(qs[i]), qout(qs[(i + 1) % 5])) for i in range(5)]
+    amps = [Intcode(prog, qin(qs[i])) for i in range(5)]
     threads = []
     for i in range(5):
-        thread = threading.Thread(target=amps[i].run)
+        thread = threading.Thread(target=amps[i].run, args=[qout(qs[(i + 1) % 5])])
         threads.append(thread)
         thread.start()
 

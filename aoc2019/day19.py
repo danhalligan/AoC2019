@@ -1,15 +1,13 @@
 from aoc2019.intcode2 import *
-from aoc2019.helpers import input_ints
 from math import floor
 
 
-def inbeam_gen(prog):
-    return lambda x, y: list(Intcode(prog, [x, y]).generate())[0]
+def inbeam_gen(file):
+    return lambda x, y: SimpleIntcode(file, [x, y]).run()[0]
 
 
 def part1(file):
-    prog = input_ints(file)
-    inbeam = inbeam_gen(prog)
+    inbeam = inbeam_gen(file)
     tot = 0
     for j in range(50):
         for i in range(50):
@@ -34,8 +32,7 @@ def find_ratios(y, inbeam):
 # The y value that fits a 100 sized box is approximately
 # (100*s/200 + 100) / (e/200 + r1)
 def part2(file):
-    prog = input_ints(file)
-    inbeam = inbeam_gen(prog)
+    inbeam = inbeam_gen(file)
 
     r1, r2 = find_ratios(200, inbeam)
     y = floor((99 * r1 + 99) / (r2 - r1)) - 20

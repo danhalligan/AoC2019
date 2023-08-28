@@ -1,8 +1,7 @@
-from aoc2019.intcode import *
+from aoc2019.intcode2 import *
 from aoc2019.arcade import Arcade
 from collections import defaultdict
 from aoc2019.helpers import input_ints
-from queue import Queue
 
 
 def chunks(l, n):
@@ -12,12 +11,9 @@ def chunks(l, n):
 
 def part1(file):
     prog = input_ints(file)
-    inp = Queue()
-    out = Queue()
-    arcade = Intcode(prog, lambda: inp.get(), qout(out))
-    gen = arcade.gen()
+    arcade = Intcode(prog).generate()
     screen = defaultdict(int)
-    for x, y, v in chunks(list(gen), 3):
+    for x, y, v in chunks(list(arcade), 3):
         screen[x, y] = v
     return len([x for x in screen.values() if x == 2])
 

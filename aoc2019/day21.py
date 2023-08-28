@@ -1,9 +1,8 @@
 import aoc2019.springdroid
-import importlib
 
 
 def part1(file):
-    sd = aoc2019.springdroid.SpringDroid("inputs/day21.txt")
+    sd = aoc2019.springdroid.SpringDroid(file)
     # We always jump 4 places
     # !C means C is a hole
     # Jump if (!C & D) | (!A)
@@ -34,7 +33,7 @@ def part1(file):
 
 
 def part2(file):
-    sd = aoc2019.springdroid.SpringDroid("inputs/day21.txt")
+    sd = aoc2019.springdroid.SpringDroid(file)
     # D && (!A | !B | (!C & (!F | H))
     return sd.input(
         [

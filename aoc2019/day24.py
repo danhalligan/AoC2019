@@ -54,8 +54,8 @@ def part1(file):
 
 
 def adjust_coord(space, i, j, ic, jc):
-    # return 1 coordinate except for 4 positions where we return 5!
-    # Let's handle these first. In all cases the space is decremented
+    # In squares 8, 12, 14 and 18 we can have 5 neighbours if we move to a
+    # containing space.
     if i == 2 and j == 1 and jc == 1:  # square 8
         return [(space + 1, i, 0) for i in range(5)]
     if i == 1 and j == 2 and ic == 1:  # square 12
@@ -65,10 +65,7 @@ def adjust_coord(space, i, j, ic, jc):
     if i == 2 and j == 3 and jc == -1:  # square 14
         return [(space + 1, i, 4) for i in range(5)]
 
-    # Otherwise we will return 1 position (either in the same space or space+1)
-    # by default a position stays in same space and i and j are altered by 1
-    # according to the change (ic or jc)
-    # except for when i or j are 0 or 4, where some changes cause space to change
+    # When i or j are 0 or 4, we can move to an outer space (1 neighbour)
     if i == 0 and ic == -1:
         return [(space - 1, 1, 2)]
     if j == 0 and jc == -1:
@@ -78,7 +75,7 @@ def adjust_coord(space, i, j, ic, jc):
     if j == 4 and jc == 1:
         return [(space - 1, 2, 3)]
 
-    # Otherwise do the normal thing
+    # Otherwise we stay in the space and just increment i and j as normal
     return [(space, i + ic, j + jc)]
 
 

@@ -23,7 +23,7 @@ def dwi(deck, n):
 def part1(file):
     deck = list(range(10006 + 1))
 
-    for line in input_lines("inputs/day22.txt"):
+    for line in input_lines(file):
         if line.startswith("deal into new"):
             deck = dns(deck)
         elif line.startswith("deal with increment"):
@@ -72,6 +72,6 @@ def num_at_pos(sz, reps, shuf, p):
 
 
 def part2(file):
-    lines = input_lines("inputs/day22.txt")
+    lines = input_lines(file)
     # print("Verify part 1:", num_at_pos(10007, 1, lines, 2019)[0])
     return num_at_pos(119315717514047, 101741582076661, lines, 2020)[1]

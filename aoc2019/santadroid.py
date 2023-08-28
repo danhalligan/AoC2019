@@ -7,15 +7,10 @@ class SantaDroid:
         self.prog = input_ints(file)
         self.exe = Intcode(self.prog, inputter=self.ascii_input)
         self.pos = (0, 0)
-        self.output = []
-
-    def input(self, instructions):
-        for inst in instructions:
-            self.write_input(inst)
-        return self
+        self.output = ""
 
     def collect(self):
-        inst = [
+        cmds = [
             "west",
             "take ornament",
             "west",
@@ -46,8 +41,8 @@ class SantaDroid:
             "north",
             "west",
         ]
-        self.input(inst)
-        self.run(False)
+        for cmd in cmds:
+            self.command(cmd)
         return self
 
     def objects(self):
@@ -63,42 +58,25 @@ class SantaDroid:
         ]
 
     def drop_and_try(self, obj):
-        cmds = ["drop " + x for x in obj]
-        self.input(cmds)
-        self.run(False)
-        cmds = ["north"]
-        self.input(cmds)
-        self.run(True)
-        cmds += ["take " + x for x in obj]
-        self.input(cmds)
-        self.run(False)
+        for x in obj:
+            self.drop(x)
+        self.command("north")
+        for x in obj:
+            self.take(x)
 
-    def run(self, print_output=True):
-        while self.exe.inputs:
+    def drop(self, obj):
+        self.command("drop " + obj)
+
+    def take(self, obj):
+        self.command("take " + obj)
+
+    def run(self):
+        while self.exe.inputs and not self.exe.halted:
             for out in self.exe.rungame():
-                if print_output:
-                    print(chr(out), end="")
-
-    def interactive(self):
-        for v in self.exe.generate():
-            print(chr(v), end="")
-
-    # def interactive(self):
-    #     while self.exe.inputs:
-    #         out = self.exe.run_until_io_or_done()
-    #         if out is not None:
-    #             self.output += [out]
-
-    def print_output(self):
-        for v in self.output:
-            print(chr(v), end="")
+                self.output += chr(out)
 
     def command(self, cmd):
-        self.input([cmd])
-        self.run()
-
-    def inv(self):
-        self.input(["inv"])
+        self.write_input(cmd)
         self.run()
 
     def write_input(self, vals):

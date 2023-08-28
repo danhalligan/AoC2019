@@ -1,7 +1,7 @@
 from aoc2019.helpers import input_lines
 from numpy import sign
 from math import gcd, sqrt, degrees, atan2
-from heapq import *
+from heapq import heappush, heappop
 
 
 def parse_asteroids(file):
