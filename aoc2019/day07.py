@@ -1,5 +1,5 @@
 from aoc2019.helpers import input_ints
-from aoc2019.intcode2 import *
+from aoc2019.intcode import *
 from functools import reduce
 from itertools import permutations
 from queue import Queue

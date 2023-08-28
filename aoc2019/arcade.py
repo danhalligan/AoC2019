@@ -37,13 +37,12 @@ class Arcade:
         self.prog = input_ints(file)
         self.prog[0] = "2"
         self.inp = Queue()
-        self.out = Queue()
         self.score = 0
-        self.arcade = Intcode(self.prog, lambda: self.inp.get(), qout(self.out))
+        self.arcade = Intcode(self.prog, lambda: self.inp.get())
         self.screen = defaultdict(int)
 
-    def play(self):
-        gen = self.arcade.gen()
+    def play(self, view=False):
+        gen = self.arcade.generate()
         self.paddle = 99
         ball_pos = (-1, -1)
         while not self.arcade.halted:
@@ -56,28 +55,28 @@ class Arcade:
                     elif v == 4:
                         ball_pos = (x, y)
                         self.inp.put(-spaceship(ball_pos[0], self.paddle))
-                    elif ball_pos == (x, y):
-                        continue
-                        # print(self.view())
-                        # sleep(0.05)
+                    elif ball_pos == (x, y) and view:
+                        self.view()
+                        sleep(0.1)
                     self.screen[x, y] = v
             self.screen[x, y] = v
+        return self
         # print(f"END! Score: {self.score}")
 
     def view(self):
+        LINE_UP = "\033[1A"
+        LINE_CLEAR = "\x1b[2K"
         tile = {
             0: " ",  # empty
             1: "\u2588",  # wall
             2: "\u2610",  # block
             3: "\u2594",  # paddle
-            4: "\u2022",  # ball
+            4: "o",  # ball
         }
         xr = span(x[0] for x in self.screen.keys())
         yr = span(x[1] for x in self.screen.keys())
-        # print("\r\033[100A")
-        s = ""
+        for _ in range(28):
+            print(LINE_UP, end=LINE_CLEAR)
         for j in yr:
-            s += "".join(tile[self.screen[i, j]] for i in xr)
-            s += "\n"
-        s += f"{self.score}\n"
-        return s
+            print("".join(tile[self.screen[i, j]] for i in xr))
+        print(f"{self.score}\n")

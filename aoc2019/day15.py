@@ -19,18 +19,12 @@ def dij(droid, start):
 
 
 def part1(file):
-    droid = Droid(file)
-    droid.start()
-    droid.explore()
-    droid.kill()
+    droid = Droid(file).start().explore().kill()
     oxygen = [k for k, v in droid.area.items() if v == 2][0]
     return dij(droid, (0, 0))[oxygen]
 
 
 def part2(file):
-    droid = Droid(file)
-    droid.start()
-    droid.explore()
-    droid.kill()
+    droid = Droid(file).start().explore().kill()
     oxygen = [k for k, v in droid.area.items() if v == 2][0]
     return max(dij(droid, oxygen).values())

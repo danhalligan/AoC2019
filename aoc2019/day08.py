@@ -15,7 +15,7 @@ def parse_layers(file):
 
 def part1(file):
     layers = parse_layers(file)
-    minl = np.argmin(np.sum(layers, axis=(1, 2)))
+    minl = np.argmin(np.sum(layers == 0, axis=(1, 2)))
     return np.sum(layers[minl] == 1) * np.sum(layers[minl] == 2)
 
 

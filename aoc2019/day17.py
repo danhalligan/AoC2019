@@ -1,4 +1,4 @@
-from aoc2019.intcode2 import *
+from aoc2019.intcode import *
 from aoc2019.helpers import input_ints
 from collections import defaultdict
 from aoc2019.vacuum import *

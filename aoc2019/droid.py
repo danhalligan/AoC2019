@@ -9,7 +9,10 @@ class Droid:
         self.prog = input_ints(file)
         self.inp = Queue()
         self.out = Queue()
-        self.exe = Intcode(self.prog, lambda: self.inp.get(), qout(self.out))
+        self.exe = Intcode(
+            self.prog,
+            lambda: self.inp.get(),
+        )
         self.area = {}
         self.pos = (0, 0)
         self.area[self.pos] = 1
@@ -17,11 +20,14 @@ class Droid:
         self.stop = False
 
     def start(self):
-        self.thread = threading.Thread(target=self.exe.run, args=[99])
+        self.thread = threading.Thread(target=self.exe.run, args=[qout(self.out)])
         self.thread.start()
+        return self
 
     def kill(self):
+        self.exe.halted = True
         self.inp.put(99)
+        return self
 
     # Attempt to move the droid by issuing command to intcode executable
     def move(self, command):
@@ -92,6 +98,7 @@ class Droid:
                 self.move(v)
                 self.explore()
                 self.unmove()
+        return self
 
     @staticmethod
     def span(x):

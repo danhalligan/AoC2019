@@ -1,4 +1,4 @@
-from aoc2019.intcode2 import *
+from aoc2019.intcode import *
 from math import floor
 
 

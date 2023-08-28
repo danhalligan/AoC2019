@@ -1,4 +1,4 @@
-from aoc2019.intcode2 import *
+from aoc2019.intcode import *
 from aoc2019.arcade import Arcade
 from collections import defaultdict
 from aoc2019.helpers import input_ints
@@ -19,6 +19,5 @@ def part1(file):
 
 
 def part2(file):
-    x = Arcade(file)
-    x.play()
+    x = Arcade(file).play()
     return x.score

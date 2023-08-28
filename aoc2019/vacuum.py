@@ -1,4 +1,4 @@
-from aoc2019.intcode2 import Intcode
+from aoc2019.intcode import Intcode
 from aoc2019.helpers import input_ints
 
 
