@@ -1,35 +1,8 @@
 from aoc2019.intcode import *
 from collections import defaultdict
-from aoc2019.helpers import input_ints
+from aoc2019.helpers import input_ints, span, spaceship
 from queue import Queue
 from time import sleep
-
-
-def get_all(queue):
-    out = []
-    # sleep(0.1)
-    while not queue.empty():
-        out.append(queue.get_nowait())
-    return out
-
-
-def chunks(l, n):
-    for i in range(0, len(l), n):
-        yield l[i : i + n]
-
-
-def spaceship(a, b):
-    # like spaceship operator from ruby
-    return 1 if a < b else -1 if a > b else 0
-
-
-def span(x):
-    x = list(x)
-    return range(min(x), max(x) + 1)
-
-
-def qout(q):
-    return lambda x: q.put_nowait(x)
 
 
 class Arcade:

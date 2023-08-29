@@ -10,6 +10,11 @@ from datetime import date
 app = typer.Typer()
 
 
+def get_part(day, part):
+    module = import_module(f"aoc2019.day{day:02d}")
+    return getattr(module, f"part{part}")
+
+
 @app.command("solve")
 def solve(files: List[Path]):
     """Solve a challenges based on filename"""
@@ -17,10 +22,9 @@ def solve(files: List[Path]):
         if path.is_file():
             day = int(re.findall(r"\d+", path.name)[0])
             print(f"--- Day {day} ---")
-            module = import_module(f"aoc2019.day{day:02d}")
             for part in [1, 2]:
                 try:
-                    print(f"Part {part}:", getattr(module, f"part{part}")(path))
+                    print(f"Part {part}:", get_part(day, part)(path))
                 except AttributeError:
                     print(f"No part {part}")
             print()

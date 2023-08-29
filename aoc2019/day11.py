@@ -1,6 +1,6 @@
 from aoc2019.intcode import *
 from collections import defaultdict
-from aoc2019.helpers import input_ints
+from aoc2019.helpers import input_ints, span
 from queue import Queue
 import threading
 from advent_of_code_ocr import convert_6
@@ -33,11 +33,6 @@ def part1(file):
     prog = input_ints(file)
     panels = paint(prog, 0)
     return len(panels)
-
-
-def span(x):
-    x = list(x)
-    return range(min(x), max(x) + 1)
 
 
 def part2(file):

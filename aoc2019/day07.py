@@ -18,7 +18,7 @@ def amplify(prog, phases):
 
 def part1(file):
     prog = input_ints(file)
-    return max(amplify(prog, perm) for perm in permutations([0, 1, 2, 3, 4]))
+    return max(amplify(prog, perm) for perm in permutations(range(5)))
 
 
 def amplify2(prog, phases):

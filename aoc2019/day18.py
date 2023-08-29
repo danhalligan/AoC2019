@@ -1,4 +1,4 @@
-from aoc2019.helpers import input_lines
+from aoc2019.helpers import input_lines, span
 from heapq import heappop, heappush
 import string
 
@@ -19,11 +19,6 @@ def parse_map(file):
             else:
                 area[i, j] = grid[j][i]
     return area, (tuple(robots), tuple(items))
-
-
-def span(x):
-    x = list(x)
-    return range(min(x), max(x) + 1)
 
 
 def view(area, state):
@@ -50,10 +45,6 @@ def move(p, d):
         "v": (p[0], p[1] + 1),
         "<": (p[0] - 1, p[1]),
     }[d]
-
-
-def rev(x):
-    return {v: k for k, v in x.items()}
 
 
 def valid_moves(area, pos, robots):

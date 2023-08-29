@@ -35,6 +35,17 @@ def input_blocks(file, sep="\n\n"):
     return [block.split() for block in blocks]
 
 
+def span(x):
+    """Returns a range to iterate from min to max"""
+    x = list(x)
+    return range(min(x), max(x) + 1)
+
+
+def spaceship(a, b):
+    """Like spaceship operator from ruby"""
+    return 1 if a < b else -1 if a > b else 0
+
+
 # Breadth First Search
 # If end is provided, we don't consider paths any longer than path to end.
 def bfs(start, neighbours, end=None):

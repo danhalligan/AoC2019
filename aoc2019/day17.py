@@ -1,5 +1,5 @@
 from aoc2019.intcode import *
-from aoc2019.helpers import input_ints
+from aoc2019.helpers import input_ints, span
 from collections import defaultdict
 from aoc2019.vacuum import *
 
@@ -16,11 +16,6 @@ def parse_scaffolds(file):
             scaffolds[i, j] = chr(v)
             i += 1
     return scaffolds
-
-
-def span(x):
-    x = list(x)
-    return range(min(x), max(x) + 1)
 
 
 def view(scaffolds):

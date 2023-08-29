@@ -1,5 +1,5 @@
 from aoc2019.intcode import Intcode, qout
-from aoc2019.helpers import input_ints
+from aoc2019.helpers import input_ints, span
 from queue import Queue
 import threading
 
@@ -75,8 +75,8 @@ class Droid:
 
     def print_area(self):
         ks = [k for k, v in self.area.items() if v is not None]
-        ir = self.span(x[0] for x in ks + [self.pos])
-        jr = self.span(x[1] for x in ks + [self.pos])
+        ir = span(x[0] for x in ks + [self.pos])
+        jr = span(x[1] for x in ks + [self.pos])
         for j in jr:
             txt = [self.print_value(i, j) for i in ir]
             print("".join(txt))
@@ -102,11 +102,6 @@ class Droid:
                 self.explore()
                 self.unmove()
         return self
-
-    @staticmethod
-    def span(x):
-        x = list(x)
-        return range(min(x), max(x) + 1)
 
     @staticmethod
     def newpos(p, d):
