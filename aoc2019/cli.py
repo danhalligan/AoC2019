@@ -1,6 +1,6 @@
 import typer
 import re
-import importlib
+from importlib import import_module
 import os
 import requests
 from pathlib import Path
@@ -17,15 +17,12 @@ def solve(files: List[Path]):
         if path.is_file():
             day = int(re.findall(r"\d+", path.name)[0])
             print(f"--- Day {day} ---")
-            module = importlib.import_module(f"aoc2019.day{day:02d}")
-            try:
-                print("Part 1:", getattr(module, "part1")(path))
-            except AttributeError:
-                print("No part 1")
-            try:
-                print("Part 2:", getattr(module, "part2")(path))
-            except AttributeError:
-                print("No part 2")
+            module = import_module(f"aoc2019.day{day:02d}")
+            for part in [1, 2]:
+                try:
+                    print(f"Part {part}:", getattr(module, f"part{part}")(path))
+                except AttributeError:
+                    print(f"No part {part}")
             print()
 
 
@@ -39,9 +36,10 @@ def input(day: int = date.today().day):
         f"https://adventofcode.com/2019/day/{day}/input",
         cookies={"session": os.environ.get("AOC_SESSION")},
     )
-    with open("inputs/day" + f"{day:02d}" + ".txt", "w") as f:
+    file = f"inputs/day{day:02d}.txt"
+    with open(file, "w") as f:
         f.write(res.text)
-    return "inputs/day" + f"{day:02d}" + ".txt"
+    return file
 
 
 def main():

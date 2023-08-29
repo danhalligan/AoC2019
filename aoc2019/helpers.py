@@ -1,5 +1,6 @@
 # Functions to help read inputs
 import re
+from heapq import heappush, heappop
 
 
 def getint(x):
@@ -32,3 +33,38 @@ def input_blocks(file, sep="\n\n"):
     """Returns lines of input split by empty lines from input file"""
     blocks = open(file).read().split(sep)
     return [block.split() for block in blocks]
+
+
+# Breadth First Search
+# If end is provided, we don't consider paths any longer than path to end.
+def bfs(start, neighbours, end=None):
+    visited = {start: 0}
+    queue = []
+    queue.append(start)
+    while queue:
+        pos = queue.pop(0)
+        for neighbour in neighbours(pos):
+            if neighbour not in visited:
+                if end is None or visited[pos] + 1 < visited.get(end, float("inf")):
+                    visited[neighbour] = visited[pos] + 1
+                    queue.append(neighbour)
+    return visited
+
+
+# Dijkstra's algorithm
+# If end is provided, we don't consider paths any longer than path to end.
+def dij(start, neighbours, end=None):
+    scores = {start: 0}
+    queue = [(0, start)]
+    best = float("inf")
+    while len(queue):
+        score, pos = heappop(queue)
+        for nb in neighbours(pos):
+            new_score = score + 1
+            if new_score > best:
+                break
+            if new_score < scores.get(nb, float("inf")):
+                if end is None or new_score < scores.get(end, float("inf")):
+                    scores[nb] = new_score
+                    heappush(queue, (new_score, nb))
+    return scores

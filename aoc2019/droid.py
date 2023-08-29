@@ -62,6 +62,9 @@ class Droid:
             or self.area[self.newpos(pos, m)] != 0
         ]
 
+    def neighbours(self, pos):
+        return [self.newpos(pos, m) for m in self.possible_moves(pos)]
+
     def print_value(self, i, j):
         if self.pos == (i, j):
             return "D"

@@ -1,8 +1,7 @@
 import numpy as np
-from aoc2019.helpers import input_lines
+from aoc2019.helpers import input_lines, bfs
 from string import ascii_uppercase
 from itertools import permutations
-from heapq import heappop, heappush
 from termcolor import colored
 
 
@@ -89,28 +88,12 @@ def print_donut(data, path=[]):
         print()
 
 
-# find shortest paths to targets using Dijkstra's algorithm
-def dij(data, portals, start, end, movefn=valid_moves):
-    scores = {start: 0}
-    # paths = {start: []}
-    queue = [(0, start)]
-    while len(queue):
-        score, pos = heappop(queue)
-        for npos in movefn(data, portals, pos):
-            new = score + 1
-            if new < scores.get(npos, 100000) and new < scores.get(end, 100000):
-                scores[npos] = new
-                # paths[npos] = paths[pos] + [pos]
-                heappush(queue, (new, npos))
-    return scores[end]
-
-
 def part1(file):
     data = np.array([list(line) for line in input_lines(file)])
     portals = find_portals(data)
     start = find_code(data, ["A", "A"])[0]
     end = find_code(data, ["Z", "Z"])[0]
-    return dij(data, portals, start, end)
+    return bfs(start, lambda x: valid_moves(data, portals, x))[end]
 
 
 # position is on outer edge of donut (not in the actual labels)
@@ -149,8 +132,4 @@ def part2(file):
     portals = find_portals(data)
     start = (find_code(data, ["A", "A"])[0], 0)
     end = (find_code(data, ["Z", "Z"])[0], 0)
-    return dij(data, portals, start, end, movefn=valid_moves_layers)
-
-
-# valid_moves_layers(data, portals, start, 0)
-# valid_moves_layers(data, portals, find_code(data, ["L", "P"])[0], 0)
+    return bfs(start, lambda x: valid_moves_layers(data, portals, x), end)[end]

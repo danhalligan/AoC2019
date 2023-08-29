@@ -1,6 +1,5 @@
-from aoc2019.helpers import input_lines
+from aoc2019.helpers import input_lines, bfs
 from collections import defaultdict
-from heapq import *
 
 
 def total_orbits(tree, x, depth):
@@ -19,22 +18,6 @@ def part1(file):
     return total_orbits(orbits, "COM", 0)
 
 
-def dij(graph, start):
-    scores = {start: 0}
-    queue = [(0, start)]
-    best = 100000
-    while len(queue):
-        score, pos = heappop(queue)
-        for nb in graph[pos]:
-            new = score + 1
-            if new > best:
-                break
-            if new < scores.get(nb, 100000):
-                scores[nb] = new
-                heappush(queue, (new, nb))
-    return scores
-
-
 def part2(file):
     mp = input_lines(file)
     graph = defaultdict(list)
@@ -42,5 +25,4 @@ def part2(file):
         planet, orbiter = m.split(")")
         graph[planet] += [orbiter]
         graph[orbiter] += [planet]
-
-    return dij(graph, "YOU")["SAN"] - 2
+    return bfs("YOU", lambda x: graph[x])["SAN"] - 2

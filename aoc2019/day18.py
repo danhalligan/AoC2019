@@ -65,7 +65,7 @@ def valid_moves(area, pos, robots):
 
 
 # find shortest paths to targets using Dijkstra's algorithm
-def dij(area, start, items, robots=[]):
+def get_scores(area, start, items, robots=[]):
     item_locations = [b for _, b in items]
     scores = {start: 0}
     queue = [(0, start)]
@@ -75,7 +75,7 @@ def dij(area, start, items, robots=[]):
             new = score + 1
             if new < scores.get(npos, 10000000):
                 scores[npos] = new
-                if area[npos] in "." and npos not in item_locations:
+                if npos not in item_locations:
                     heappush(queue, (new, npos))
     kr = {b: a for a, b in items if a in string.ascii_lowercase}
     return [{"key": kr[k], "score": v, "pos": k} for k, v in scores.items() if k in kr]
@@ -99,7 +99,7 @@ def part1(file):
     while len(queue):
         score, state = heappop(queue)
         robots, items = state
-        for mv in dij(area, robots[0], items):
+        for mv in get_scores(area, robots[0], items):
             new_score = score + mv["score"]
             remaining = unlock(items, mv["key"])
             if remaining:
@@ -139,7 +139,7 @@ def all_moves(area, robots, items):
     for i in range(4):
         robot = robots[i]
         others = [x for j, x in enumerate(robots) if i != j]
-        for move in dij(area, robot, items, others):
+        for move in get_scores(area, robot, items, others):
             move["robot"] = i
             moves += [move]
     return moves
