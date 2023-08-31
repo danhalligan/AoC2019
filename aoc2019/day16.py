@@ -25,7 +25,7 @@ def fft(signal, pattern, n=100):
 def part1(file):
     signal = input_lines(file)[0]
     pattern = [0, 1, 0, -1]
-    return fft(signal, pattern)[:8]
+    return int(fft(signal, pattern)[:8])
 
 
 # https://www.reddit.com/r/adventofcode/comments/ebf5cy/2019_day_16_part_2_understanding_how_to_come_up
@@ -48,4 +48,4 @@ def part2(file):
     for _ in range(100):
         signal = [x % 10 for x in accumulate(signal)]
     signal.reverse()
-    return "".join(str(x) for x in signal[:8])
+    return int("".join(str(x) for x in signal[:8]))
